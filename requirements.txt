@@ -3,9 +3,10 @@ uvicorn[standard]==0.23.2
 sqlalchemy==1.4.49
 asyncpg
 python-dotenv
-pydantic==2.1.0,<3.0.0
+pydantic>=2.5,<3
 
 
 # demoo
+
 
 
