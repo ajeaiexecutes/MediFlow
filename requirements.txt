@@ -1,8 +1,9 @@
-fastapi==0.103.2
+fastapi==0.110.0
 uvicorn[standard]==0.23.2
 sqlalchemy==1.4.49
 asyncpg
 python-dotenv
-pydantic==1.10.13
+pydantic==2.0
+
 
 # demoo
