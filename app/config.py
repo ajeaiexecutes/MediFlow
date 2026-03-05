@@ -1,5 +1,5 @@
 import os
-from pydantic_setting import BaseSettings
+from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
     # general
