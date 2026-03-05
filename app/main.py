@@ -10,7 +10,7 @@ app = FastAPI(title="MediFlow SaaS Platform")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["https://medi-flow-qjr7.vercel.app",
-    "http://localhost:3000","*"],
+    "http://localhost:3000"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
