@@ -1673,7 +1673,7 @@
         // Fetch appointments from API
         async function fetchAppointments() {
             try {
-                const res = await fetch(API_BASE + "/bookings");
+                const res = await fetch(API_BASE + "/bookings/");
                 const data = await res.json();
 
                 appointments = {};
@@ -2152,4 +2152,5 @@
 
 
 </html>
+
 
