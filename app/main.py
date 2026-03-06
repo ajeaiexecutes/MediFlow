@@ -25,10 +25,6 @@ app.include_router(admin.router, prefix="/admin", tags=["admin"])
 app.include_router(bookings.router, prefix="/bookings", tags=["bookings"])
 
 
-@app.get("/db-test")
-async def db_test(db: AsyncSession = Depends(get_db)):
-    result = await db.execute(text("SELECT 1"))
-    return {"db": "connected"}
 
 # startup/shutdown events
 @app.on_event("startup")
