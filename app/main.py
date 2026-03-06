@@ -24,7 +24,7 @@ app.include_router(clinics.router, prefix="/clinics", tags=["clinics"])
 app.include_router(admin.router, prefix="/admin", tags=["admin"])
 app.include_router(bookings.router, prefix="/bookings", tags=["bookings"])
 
-//testing db connection
+
 @app.get("/db-test")
 async def db_test(db: AsyncSession = Depends(get_db)):
     result = await db.execute(text("SELECT 1"))
