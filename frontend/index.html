@@ -1639,7 +1639,7 @@
     <div class="toast-container" id="toast-container"></div>
 
     <script>
-        const API_BASE = "https://mediflow-afja.onrender.com";
+        const API_BASE = "http://localhost:8000" || "https://mediflow-afja.onrender.com";
         // ──────────────────────────────────────────
         //  DATA
         // ──────────────────────────────────────────
@@ -1655,7 +1655,7 @@
         let appointments = {};
         let currentEditId = null;
         let deleteTargetId = null;
-        let currentDate = new Date(2026, 1, 27); // Feb 27
+        let currentDate = new Date(); // Feb 27
 
         // Generate time slots
         function generateSlots() {
@@ -1670,16 +1670,24 @@
 
         const ALL_SLOTS = generateSlots();
 
+        function getFormattedDate(date) {
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+
         // Fetch appointments from API
         async function fetchAppointments() {
             try {
-                const res = await fetch(API_BASE + "/bookings");
+                const dateStr = getFormattedDate(currentDate);
+                const res = await fetch(API_BASE + "/bookings?date=" + dateStr);
                 const data = await res.json();
 
                 appointments = {};
 
                 data.forEach(item => {
-                    appointments[item.id] = {
+                    appointments['appt-' + item.time.replace(':', '-')] = {
                         id: item.id,
                         time: item.time,
                         patient: item.patient_name,
@@ -1899,7 +1907,8 @@
                         patient_name: name,
                         phone: phone,
                         notes: notes,
-                        time: time
+                        time: time,
+                        booking_date: getFormattedDate(currentDate)
                     })
                 });
 
@@ -1968,6 +1977,8 @@
             fill.className = 'progress-fill' + (pct >= 100 ? ' danger' : pct >= 80 ? ' warning' : '');
         }
 
+
+
         // ──────────────────────────────────────────
         //  DATE NAV
         // ──────────────────────────────────────────
@@ -1978,6 +1989,7 @@
             currentDate.setDate(currentDate.getDate() + dir);
             const d = currentDate;
             document.getElementById('slot-date-display').textContent = `${days[d.getDay()]}, ${d.getDate()} ${months[d.getMonth()]}`;
+            fetchAppointments();
         }
 
         // ──────────────────────────────────────────
@@ -2147,11 +2159,12 @@
         //  INIT
         // ──────────────────────────────────────────
         fetchAppointments();
+        // ──────────────────────────────────────────
+        //  INIT
+        // ──────────────────────────────────────────
+        changeDate(0);
     </script>
 </body>
 
 
 </html>
-
-
-
