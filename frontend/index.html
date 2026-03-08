@@ -1681,7 +1681,7 @@
         async function fetchAppointments() {
             try {
                 const dateStr = getFormattedDate(currentDate);
-                const res = await fetch(API_BASE + "/bookings?date=" + dateStr);
+                const res = await fetch(API_BASE + "/bookings/?date=" + dateStr);
                 const data = await res.json();
 
                 appointments = {};
@@ -2169,6 +2169,7 @@
 
 
 </html>
+
 
 
 
