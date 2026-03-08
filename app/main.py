@@ -2,6 +2,8 @@ from fastapi import FastAPI
 from app.core.logging import configure_logging
 from app.core.exceptions import register_exception_handlers
 from app.routers import clinics, admin, bookings
+from app.routers.bookings import init_db
+from app.db.session import AsyncSessionLocal
 
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -9,7 +11,7 @@ app = FastAPI(title="MediFlow SaaS Platform")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://medi-flow-qjr7.vercel.app"],
+    allow_origins=["https://medi-flow-qjr7.vercel.app", "http://0.0.0.0:3000",],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -29,7 +31,9 @@ app.include_router(bookings.router, prefix="/bookings", tags=["bookings"])
 @app.on_event("startup")
 async def startup_event():
     # init database, cache, celery, etc.
-    pass
+    async with AsyncSessionLocal() as db:
+        await init_db(db)
+    
 
 @app.on_event("shutdown")
 async def shutdown_event():

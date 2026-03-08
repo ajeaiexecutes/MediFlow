@@ -36,7 +36,7 @@ async def init_db(db: AsyncSession):
 
 @router.get("/")
 async def get_bookings(date: str = None, db: AsyncSession = Depends(get_db)):
-    await init_db(db)
+    
     query = "SELECT * FROM dashboard_bookings"
     params = {}
     if date:
@@ -47,7 +47,7 @@ async def get_bookings(date: str = None, db: AsyncSession = Depends(get_db)):
 
 @router.post("/")
 async def create_booking(booking: BookingCreate, db: AsyncSession = Depends(get_db)):
-    await init_db(db)
+   
     booking_id = "appt-" + booking.time.replace(":", "-") + "-" + booking.booking_date
     
     result = await db.execute(text("SELECT id FROM dashboard_bookings WHERE id = :id"), {"id": booking_id})
@@ -71,7 +71,7 @@ async def create_booking(booking: BookingCreate, db: AsyncSession = Depends(get_
 
 @router.delete("/{booking_id}")
 async def delete_booking(booking_id: str, db: AsyncSession = Depends(get_db)):
-    await init_db(db)
+    
     await db.execute(text("DELETE FROM dashboard_bookings WHERE id = :id"), {"id": booking_id})
     await db.commit()
     return {"message": "Booking deleted successfully"}
