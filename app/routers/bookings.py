@@ -25,7 +25,6 @@ async def init_db(db: AsyncSession):
             booking_date TEXT
         )
     """))
-    # Add columns if they don't exist for existing tables
     for col in ["date_created", "booking_date"]:
         try:
             await db.execute(text(f"ALTER TABLE dashboard_bookings ADD COLUMN {col} TEXT"))

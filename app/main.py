@@ -30,7 +30,6 @@ app.include_router(bookings.router, prefix="/bookings", tags=["bookings"])
 # startup/shutdown events
 @app.on_event("startup")
 async def startup_event():
-    # init database, cache, celery, etc.
     async with AsyncSessionLocal() as db:
         await init_db(db)
     
